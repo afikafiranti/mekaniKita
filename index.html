@@ -22,23 +22,22 @@
                   </div>
                 </div>
                 <div class="card-body pb-md-2 mx-md-4">
-                  <form clas="">
+                  <form id="login-form">
                     <p>Silahkan Login ke Akun Anda</p>
-
                     <div class="form-outline mb-4">
-                      <input type="text" id="username" class="form-control" placeholder="Username" />
+                      <input type="text" id="login-username" class="form-control" placeholder="Username" />
                     </div>
 
                     <div class="form-outline mb-4">
-                      <input type="password" id="password" class="form-control" placeholder="Password" />
+                      <input type="password" id="login-password" class="form-control" placeholder="Password" />
                     </div>
 
                     <div class="text-center pt-1 mb-3 pb-1">
-                      <a href="home.html" class="btn btn-primary" type="button">Log in</a>
+                      <button  class="btn btn-primary" type="submit">Log in</button>
                     </div>
-                    <div class="d-flex align-items-center justify-content-center pb-4">
-                      <p class="mb-0 me-2">Belum memiliki akun?</p>
-                      <a href="regist.html" class="btn btn-outline-danger" type="button">Daftar disinin</a>
+                    <div class="d-flex align-items-center justify-content-between align-items-center pb-4">
+                      <p class="fs-6">Belum memiliki akun?</p>
+                      <a href="regist.html" class="btn btn-success" type="button">Daftar</a>
                     </div>
                   </form>
                 </div>
@@ -48,5 +47,33 @@
         </div>
       </div>
     </section>
+    <script>
+      // Mengambil elemen form login
+      var loginForm = document.getElementById("login-form");
+
+      // Menambahkan event listener pada pengiriman form login
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Mencegah reload halaman
+
+        // Mengambil nilai input login
+        var loginUsername = document.getElementById("login-username").value;
+        var loginPassword = document.getElementById("login-password").value;
+
+        // Memeriksa dan memvalidasi login
+        var storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+        var isLoggedIn = storedUsers.some(function (user) {
+          return user.username === loginUsername && user.password === loginPassword;
+        });
+
+        if (isLoggedIn) {
+          alert("Login berhasil!");
+          loginForm.reset();
+          //menampilkan halaman home
+          window.location.href = 'home.html';
+        } else {
+          alert("Username atau password salah!");
+        }
+      });
+    </script>
   </body>
 </html>

@@ -22,7 +22,7 @@
                   </div>
                 </div>
                 <div class="card-body pb-md-2 mx-md-4">
-                  <form clas="">
+                  <form id="registration-form">
                     <p>Silahkan Masukkan Data Anda</p>
 
                     <div class="form-outline mb-4">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="text-center pt-1 mb-3 pb-1">
-                      <a href="index.html" class="btn btn-primary btn-block fa-lg gradient-custom-2" type="button">Daftar</a>
+                      <button  class="btn btn-primary btn-block fa-lg gradient-custom-2" type="submit">Daftar</button>
                     </div>
                     <!-- <div class="d-flex align-items-center justify-content-center pb-4">
                       <p class="mb-0 me-2">Belum memiliki akun?</p>
@@ -48,5 +48,39 @@
         </div>
       </div>
     </section>
+  <script>
+    // Mengambil elemen form registrasi
+    var registrationForm = document.getElementById("registration-form");
+
+    // Menambahkan event listener pada pengiriman form registrasi
+    registrationForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Mencegah reload halaman
+
+      // Mengambil nilai input registrasi
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Memeriksa dan menyimpan data registrasi
+      var storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+      var isRegistered = storedUsers.some(function (user) {
+        return user.username === username;
+      });
+
+      if (isRegistered) {
+        alert("Username sudah terdaftar!");
+      } else {
+        var registrationData = {
+          username: username,
+          password: password,
+        };
+        storedUsers.push(registrationData);
+        localStorage.setItem("users", JSON.stringify(storedUsers));
+        alert("Registrasi berhasil!");
+        registrationForm.reset();
+        //kembali ke halaman login
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
   </body>
 </html>
